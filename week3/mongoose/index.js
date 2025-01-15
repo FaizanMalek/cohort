@@ -28,7 +28,7 @@ app.post("/signup", async (req,res)=>{
         password:password,
     });
 
-    user.save();
+    await user.save();
     res.json({
         msg: "User created successfully",
     });
