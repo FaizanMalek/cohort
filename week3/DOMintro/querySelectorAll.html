@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuerySelectorAll demo</title>
+</head>
+<body>
+    <h2>JS HTML DOM </h2>
+    <p class="intro">Finding HTML elements by QuerySelector</p>
+    <div>Div one</div>
+    <p class="intro">pARA TWO</p>
+    <div>Div two</div>
+    <p id="intro">para Three</p>
+    <div>Div three</div>
+
+    <div id="myDiv" style="border:1px solid black; padding:8px"> 
+        <h2 class="example">A Heading</h2>
+        <p class="example">A paragraph</p>
+        <p class="example">A paragraph</p>
+    </div>
+
+    <p id="demo"></p>
+
+    <script>
+        const paragraphs = document.querySelectorAll('p#intro');
+        paragraphs.forEach(p => p.style.backgroundColor = "red" )
+
+        // can pass multiple selectors as well as 
+        const matches = element.querySelectorAll("p.intro, p.subheading");
+        const element = document.getElementById("myDiv");
+        const list = element.querySelectorAll(".example");
+
+        document.getElementById("demo").innerHTML = list.length;
+
+
+    </script>
+</body>
+</html>
