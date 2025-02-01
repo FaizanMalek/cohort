@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Reconcilers : Virtual and Actual DOM difference </title>
+    
+    <script>
+        
+        let globalId = 1;
+        let todoState = [];
+        let oldTodoState = [];
+
+        function createTodoElement(todo) {
+            const parent = document.createElement("div");
+            parent.id = todo.id;
+            
+            const title = document.createElement("div");
+            title.textContent = todo.title;
+            
+            const description = document.createElement("div");
+            description.textContent = todo.description;
+            
+            const doneButton = document.createElement("button");
+            doneButton.textContent = todo.completed ? "Done" : "Mark as Done";
+            doneButton.onclick = () => toggleTodo(todo.id);
+            
+            const deleteButton = document.createElement("button");
+            deleteButton.textContent = "Delete";
+            deleteButton.onclick = () => removeTodo(todo.id);
+
+            parent.appendChild(title);
+            parent.appendChild(description);
+            parent.appendChild(doneButton);
+            parent.appendChild(deleteButton);
+            
+            return parent;
+        }
+
+        function addTodo() {
+            const title = document.getElementById("title").value;
+            const description = document.getElementById("description").value;
+            
+            todoState.push({
+                title: title,
+                description: description,
+                id : globalId++,
+                completed: false
+            });
+
+            updateState();
+        }
+
+        function toggleTodo(id) {
+            todoState = todoState.map(todo => 
+                todo.id === id ? {...todo, completed: !todo.completed} : todo
+            );
+            updateState();
+        }
+
+        function removeTodo(id) {
+            todoState = todoState.filter(todo => todo.id !== id);
+            updateState();
+        }
+
+        function updateState() {
+            // Calculate differences
+            const added = todoState.filter(newTodo => 
+                !oldTodoState.some(oldTodo => oldTodo.id === newTodo.id)
+            );
+            
+            const deleted = oldTodoState.filter(oldTodo => 
+                !todoState.some(newTodo => newTodo.id === oldTodo.id)
+            );
+            
+            const updated = todoState.filter(newTodo => {
+                const oldTodo = oldTodoState.find(t => t.id === newTodo.id);
+                return oldTodo && (oldTodo.title !== newTodo.title || 
+                                 oldTodo.description !== newTodo.description ||
+                                 oldTodo.completed !== newTodo.completed);
+            });
+
+            // Update DOM
+            added.forEach(todo => {
+                const element = createTodoElement(todo);
+                document.getElementById("todos").appendChild(element);
+            });
+
+            deleted.forEach(todo => {
+                const element = document.getElementById(todo.id);
+                if (element) element.remove();
+            });
+
+            updated.forEach(todo => {
+                const element = document.getElementById(todo.id);
+                if (element) {
+                    element.children[0].textContent = todo.title;
+                    element.children[1].textContent = todo.description;
+                    element.children[2].textContent = todo.completed ? "Done" : "Mark as Done";
+                }
+            });
+
+            oldTodoState = [...todoState];
+        }
+
+    </script>
+</head>
+<body>
+    <input type="text" id="title" placeholder="Todo title"><br><br>
+    <input type="text" id="description" placeholder="Todo description"><br><br>
+    <button onclick="addTodo()">Add todo</button><br><br>
+    <div id="todos"></div>
+</body>
+</html>
