@@ -51,21 +51,21 @@ const [todos, setTodos] = useState([{
     
   )
 }
-<div>
+{/* <div>
 <button onClick={()=> setTodos([...todos, {
   title: "study DSAasdasdasd",
   description :  "study from 9-12312310" 
-}])}>Add A  random todo</button>
+}])}>Add A  random todo</button> */}
 
 {/* <Todo title = {todos[0].title} description = {todos[0].description}></Todo>
 <Todo title = {todos[1].title} description = {todos[1].description}></Todo> */}
 
 {/* {todos.map((todo) => (<Todo title = {todo.title} description = {todo.description}></Todo>))}
  */}
-  {todos.map(function(todo) { //IN JSX ANY JAVASCRIPT CODE NEEDS TO BE WRAPPED INSIDE CURLY BRACES 
+  {/* {todos.map(function(todo) { //IN JSX ANY JAVASCRIPT CODE NEEDS TO BE WRAPPED INSIDE CURLY BRACES 
     return <Todo title = {todo.title} description = {todo.description}></Todo>
   })}
-</div> 
+</div>  */}
 
 //component
 // todo App, {
