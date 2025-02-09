@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CounterUsingDOM</title>
+    <script>
+        function onButtonPress() {
+            let currentValue = document.getElementById("btn").innerHTML;
+            const count = currentValue.split(" ")[1];
+            console.log(count);
+            const newCount = parseInt(count) + 1;
+            console.log(newCount);
+
+            document.getElementById("btn").innerHTML = "Counter " + newCount;
+            console.log(currentValue);
+
+        }
+    </script>
+</head>
+<body>
+    <button onclick="onButtonPress()" id="btn">Counter 0</button>
+</body>
+</html>
